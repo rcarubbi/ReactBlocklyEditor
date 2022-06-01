@@ -1,0 +1,10 @@
+#blocklyDiv {
+    flex: 0 0 50%;
+    height: 98vh;
+}
+
+#outputDiv {
+    flex: 1 1 auto;
+    overflow: auto;
+    height: 98vh;
+}
