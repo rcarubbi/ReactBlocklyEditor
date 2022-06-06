@@ -1,7 +1,9 @@
+import ReactJson from 'react-json-view'
+
 function RulesEngine({output}) {
     
     return (
-        <p>{output}</p>
+        <ReactJson src={JSON.parse(output)}></ReactJson>
     )
 } 
 
