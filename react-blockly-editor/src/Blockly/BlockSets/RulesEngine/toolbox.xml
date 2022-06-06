@@ -1,23 +1,37 @@
 <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
-  <category name="Rules">
+  <category name="Rules" colour="#a55b80">
     <block type="rule_expression"></block>
     <block type="rule_expression_group"></block>
   </category>
-  <category name="Sequence">
+  <category name="Sequence" colour="#5ba55b">
     <block type="rule_sequence_item">
       <field name="rule_name">Name</field>
     </block>
     <block type="rule_expression_sequence"></block>
   </category>
   <sep></sep>
-  <category name="Risk Functions">
+  <category name="Risk Functions" colour="#9fa55b">
     <block type="rfl">
       <field name="field_name">field name</field>
     </block>
   </category>
-  <category name="Flow Control"></category>
-  <category name="Error Handling"></category>
+  <category name="Flow Control" colour="#745ba5"></category>
+  <category name="Logic" colour="#5b80a5">
+    <block type="logic_compare">
+      <field name="OP">EQ</field>
+    </block>
+    <block type="logic_operation">
+      <field name="OP">AND</field>
+    </block>
+    <block type="logic_negate"></block>
+    <block type="logic_boolean">
+      <field name="BOOL">TRUE</field>
+    </block>
+    <block type="logic_null"></block>
+    <block type="logic_ternary"></block>
+  </category>
+  <category name="Error Handling" colour="#a55b80"></category>
   <sep></sep>
-  <category name="Text"></category>
-  <category name="Date"></category>
+  <category name="Text" colour="#a5745b"></category>
+  <category name="Date" colour="#5ba58c"></category>
 </xml>

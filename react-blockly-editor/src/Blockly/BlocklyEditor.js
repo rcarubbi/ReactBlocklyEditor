@@ -3,7 +3,7 @@ import Blockly from 'blockly/core';
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import axios from 'axios';
-
+import 'blockly/blocks';
 
 
 import locale from 'blockly/msg/en';
