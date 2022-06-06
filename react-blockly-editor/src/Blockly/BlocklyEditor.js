@@ -4,35 +4,30 @@ import Blockly from 'blockly/core';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import axios from 'axios';
 
-import blocksArray from './BlockSets/RulesEngine/blocks.json';
-import toolboxXml from './BlockSets/RulesEngine/toolbox.xml';
-import workspaceXml from './BlockSets/RulesEngine/workspace.xml';
-import codeGenerators from './BlockSets/RulesEngine/CodeGenerators';
-import OutputComponents from './BlockSets/RulesEngine/OutputComponents';
+
 
 import locale from 'blockly/msg/en';
+ 
 
-
-blocksArray.forEach((item) => {
-
-    Blockly.Blocks[item.type] = {
-        init: function () {
-            this.jsonInit(item);
-            if (item.deletable === false) this.setDeletable(false);
-        }
-    };
-});
 
 Blockly.setLocale(locale);
 
+function BlocklyEditor({ blockSet, ...rest }) {
 
-
-function BlocklyEditor({ workspace, ...rest }) {
-
-    const blocklyDiv = useRef();
-    const workspaceRef = useRef();
-
+    const [blocksArray, setBlocksArray] = useState();
+    const [toolboxXml, setToolboxXml] = useState();
+    const [workspaceXml, setWorkspaceXml] = useState();
+    const codeGenerators = useRef();
+    const OutputComponents = useRef();
     const [output, setOutput] = useState(<></>);
+
+     const importBlockSetModules = useCallback(async () => {
+        setBlocksArray(await import(`./BlockSets/${blockSet}/blocks.json`));
+        setToolboxXml(await import(`./BlockSets/${blockSet}/toolbox.xml`));
+        setWorkspaceXml(await import(`./BlockSets/${blockSet}/workspace.xml`));
+        codeGenerators.current = await import(`./BlockSets/${blockSet}/CodeGenerators`);
+        OutputComponents.current = await import(`./BlockSets/${blockSet}/OutputComponents`);
+    }, [blockSet, setBlocksArray, setToolboxXml, setWorkspaceXml, codeGenerators, OutputComponents]);
 
     const setBlockId = useCallback((block) => {
         const max = items => {
@@ -70,8 +65,18 @@ function BlocklyEditor({ workspace, ...rest }) {
         }
     }, []);
 
+    const udpateOutputs = useCallback(async () => {
 
-    const onBlockChange = useCallback((e) => {
+        if (codeGenerators.current && OutputComponents.current) {
+            const OutputComponent = OutputComponents.current.default;
+            const outputs = codeGenerators.current.default.map((codeGenerator, index) =>
+                <OutputComponent key={index} componentName={codeGenerator.name_} output={codeGenerator.fromWorkspace(workspaceRef.current)} />
+            );
+            setOutput(outputs);
+        }
+    }, []);
+
+    const onBlockChange = useCallback(async (e) => {
         const { current: ws } = workspaceRef;
         if (e.type === Blockly.Events.BLOCK_CREATE) {
             const block = ws.getBlockById(e.blockId || e.newValue);
@@ -79,27 +84,23 @@ function BlocklyEditor({ workspace, ...rest }) {
         }
 
         if (e.newParentId !== e.oldParentId || e.newValue !== e.oldValue) {
-            udpateOutputs();
+            await udpateOutputs();
         }
 
-    }, [setBlockId]);
-
-    const udpateOutputs = () => {
-        const outputs = codeGenerators.map((codeGenerator, index) =>
-        <OutputComponents key={index} componentName={codeGenerator.name_} output={codeGenerator.fromWorkspace(workspaceRef.current)} />
-        );
-        setOutput(outputs)
-    }
+    }, [setBlockId, udpateOutputs]);
 
     const initWorkspace = useCallback(async () => {
-        const toolBoxResponse = await axios.get(toolboxXml, {
+        if (!toolboxXml || !workspaceXml)
+            return;
+
+        const toolBoxResponse = await axios.get(toolboxXml.default, {
             "Content-Type": "application/xml; charset=utf-8"
         });
-        const workspaceResponse = await axios.get(workspaceXml, {
+        const workspaceResponse = await axios.get(workspaceXml.default, {
             "Content-Type": "application/xml; charset=utf-8"
         });
 
-
+        blocklyDiv.current.innerHTML = null;
         workspaceRef.current = Blockly.inject(blocklyDiv.current,
             {
                 toolbox: toolBoxResponse.data,
@@ -112,28 +113,61 @@ function BlocklyEditor({ workspace, ...rest }) {
             workspaceRef.current.addChangeListener(onBlockChange);
             workspaceRef.current.clear();
             Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(workspaceResponse.data), workspaceRef.current);
-            udpateOutputs();
+            await udpateOutputs();
         }
-    }, [onBlockChange, rest]);
+    }, [onBlockChange, rest, toolboxXml, workspaceXml, udpateOutputs]);
 
     useEffect(() => {
-        if (!workspaceRef.current) {
-            initWorkspace();
+
+        if (!blocksArray && !toolboxXml && !workspaceXml && !codeGenerators.current && !OutputComponents.current)
+            importBlockSetModules();
+        else {
+
+            if (blocksArray) {
+                blocksArray.default.forEach((item) => {
+
+                    Blockly.Blocks[item.type] = {
+                        init: function () {
+                            this.jsonInit(item);
+                            if (item.deletable === false) this.setDeletable(false);
+                        }
+                    };
+                });
+            }
+
+            if (!workspaceRef.current) {
+                initWorkspace();
+            }
+
+          
         }
 
-    }, [initWorkspace]);
 
+    }, [blocksArray, toolboxXml, workspaceXml, codeGenerators, OutputComponents, importBlockSetModules, initWorkspace]);
 
+    useEffect(() => {
+        setBlocksArray(null);
+        setToolboxXml(null);
+        setWorkspaceXml(null);
+        codeGenerators.current = null;
+        OutputComponents.current = null;
+        workspaceRef.current = null;
+    }, [blockSet])
+
+    const blocklyDiv = useRef();
+    const workspaceRef = useRef();
 
     return (
-        <>
+        <div id="blocklyContainer">
             <div ref={blocklyDiv} id="blocklyDiv" />
 
             <div id="outputDiv">
                 {output}
             </div>
-        </>
+        </div>
     )
+
+
 }
 
 

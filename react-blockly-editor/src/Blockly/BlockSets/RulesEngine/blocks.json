@@ -1,12 +1,7 @@
 [{
   "type": "rule_expression",
-  "message0": "Expression %1 %2",
+  "message0": "Expression %1",
   "args0": [
-    {
-      "type": "field_input",
-      "name": "expression_code",
-      "text": "Name"
-    },
     {
       "type": "input_value",
       "name": "rule_expression_output"
@@ -18,13 +13,8 @@
 },
 {
   "type": "rule_expression_group",
-  "message0": "Group %1 %2",
+  "message0": "Group %1",
   "args0": [
-    {
-      "type": "field_input",
-      "name": "group_name",
-      "text": "Name"
-    },
     {
       "type": "input_value",
       "name": "rule_expression_group_output"
@@ -36,13 +26,8 @@
 },
 {
   "type": "rule_expression_sequence",
-  "message0": "Sequence %1 %2 %3",
+  "message0": "Sequence %1 %2",
   "args0": [
-    {
-      "type": "field_input",
-      "name": "sequence_name",
-      "text": "Name"
-    },
     {
       "type": "input_dummy"
     },

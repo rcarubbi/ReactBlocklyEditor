@@ -1,19 +1,13 @@
 <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
   <category name="Rules">
-    <block type="rule_expression">
-      <field name="expression_code">Name</field>
-    </block>
-    <block type="rule_expression_group">
-      <field name="group_name">Name</field>
-    </block>
+    <block type="rule_expression"></block>
+    <block type="rule_expression_group"></block>
   </category>
   <category name="Sequence">
     <block type="rule_sequence_item">
       <field name="rule_name">Name</field>
     </block>
-    <block type="rule_expression_sequence">
-      <field name="sequence_name">Name</field>
-    </block>
+    <block type="rule_expression_sequence"></block>
   </category>
   <sep></sep>
   <category name="Risk Functions">
