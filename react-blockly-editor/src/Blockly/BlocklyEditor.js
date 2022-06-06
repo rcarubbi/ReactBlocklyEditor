@@ -4,11 +4,11 @@ import Blockly from 'blockly/core';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import axios from 'axios';
 
-import blocksArray from './BlockSets/JsonBotDefinition/blocks.json';
-import toolboxXml from './BlockSets/JsonBotDefinition/toolbox.xml';
-import workspaceXml from './BlockSets/JsonBotDefinition/workspace.xml';
-import codeGenerators from './BlockSets/JsonBotDefinition/CodeGenerators';
-import OutputComponents from './BlockSets/JsonBotDefinition/OutputComponents';
+import blocksArray from './BlockSets/RulesEngine/blocks.json';
+import toolboxXml from './BlockSets/RulesEngine/toolbox.xml';
+import workspaceXml from './BlockSets/RulesEngine/workspace.xml';
+import codeGenerators from './BlockSets/RulesEngine/CodeGenerators';
+import OutputComponents from './BlockSets/RulesEngine/OutputComponents';
 
 import locale from 'blockly/msg/en';
 

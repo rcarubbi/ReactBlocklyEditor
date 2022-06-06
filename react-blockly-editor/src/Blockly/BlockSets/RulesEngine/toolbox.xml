@@ -1,0 +1,29 @@
+<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+  <category name="Rules">
+    <block type="rule_expression">
+      <field name="expression_code">Name</field>
+    </block>
+    <block type="rule_expression_group">
+      <field name="group_name">Name</field>
+    </block>
+  </category>
+  <category name="Sequence">
+    <block type="rule_sequence_item">
+      <field name="rule_name">Name</field>
+    </block>
+    <block type="rule_expression_sequence">
+      <field name="sequence_name">Name</field>
+    </block>
+  </category>
+  <sep></sep>
+  <category name="Risk Functions">
+    <block type="rfl">
+      <field name="field_name">field name</field>
+    </block>
+  </category>
+  <category name="Flow Control"></category>
+  <category name="Error Handling"></category>
+  <sep></sep>
+  <category name="Text"></category>
+  <category name="Date"></category>
+</xml>

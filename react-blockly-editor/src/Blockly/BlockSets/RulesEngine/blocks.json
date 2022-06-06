@@ -1,0 +1,89 @@
+[{
+  "type": "rule_expression",
+  "message0": "Expression %1 %2",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "expression_code",
+      "text": "Name"
+    },
+    {
+      "type": "input_value",
+      "name": "rule_expression_output"
+    }
+  ],
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "rule_expression_group",
+  "message0": "Group %1 %2",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "group_name",
+      "text": "Name"
+    },
+    {
+      "type": "input_value",
+      "name": "rule_expression_group_output"
+    }
+  ],
+  "colour": 0,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "rule_expression_sequence",
+  "message0": "Sequence %1 %2 %3",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "sequence_name",
+      "text": "Name"
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
+      "type": "input_statement",
+      "name": "expression_statements",
+      "check": "rule_sequence_item"
+    }
+  ],
+  "colour": 120,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "rule_sequence_item",
+  "message0": "Call Rule %1",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "rule_name",
+      "text": "Name"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "rfl",
+  "message0": "Get value from  %1",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "field_name",
+      "text": "field name"
+    }
+  ],
+  "output": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+}]
