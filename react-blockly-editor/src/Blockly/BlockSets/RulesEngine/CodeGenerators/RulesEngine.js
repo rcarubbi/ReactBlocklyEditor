@@ -6,13 +6,13 @@ RulesEngine.ORDER_ATOMIC = 0;
 RulesEngine.ORDER_STRING = 1;
 
 RulesEngine['rule_expression'] = function (block) {
-  var value_rule_expression_output = RulesEngine.valueToCode(block, 'rule_expression_output', RulesEngine.ORDER_ATOMIC);
+  var value_rule_expression_output = parseValue(RulesEngine.valueToCode(block, 'rule_expression_output', RulesEngine.ORDER_ATOMIC));
   return value_rule_expression_output;
 };
 
 RulesEngine['rule_expression_group'] = function (block) {
 
-  var value_rule_expression_group_output = RulesEngine.valueToCode(block, 'rule_expression_group_output', RulesEngine.ORDER_ATOMIC);
+  var value_rule_expression_group_output = parseValue(RulesEngine.valueToCode(block, 'rule_expression_group_output', RulesEngine.ORDER_ATOMIC));
   return value_rule_expression_group_output;
 };
 
@@ -41,8 +41,8 @@ RulesEngine['rfl'] = function (block) {
 
 RulesEngine.fromWorkspace = (workspace) => {
   const top_blocks = workspace.getTopBlocks(false);
-  const top_block = top_blocks[0];
-  return RulesEngine.generalBlockToObj(top_block, workspace);
+  const outputs = top_blocks.map(top_block => RulesEngine.generalBlockToObj(top_block, workspace))
+  return outputs.join('\n');
 };
 
 RulesEngine.generalBlockToObj = (block, workspace) => {
@@ -104,6 +104,19 @@ function statementToArray(stringArray) {
     } else {
       return [stringArray];
     }
+  }
+}
+
+function parseValue(value) {
+  if (!value) {
+      return value;
+  } else {
+      var noParenthesesValue = value.substring(1, value.length - 1);
+      try {
+          return JSON.parse(noParenthesesValue);
+      } catch {
+          return noParenthesesValue;
+      }
   }
 }
 
