@@ -1,23 +1,19 @@
 [{
-  "type": "rule_expression",
-  "message0": "Expression %1",
-  "args0": [
-    {
-      "type": "input_value",
-      "name": "rule_expression_output"
-    }
-  ],
-  "colour": 230,
-  "tooltip": "",
-  "helpUrl": ""
-},
-{
   "type": "rule_expression_group",
   "message0": "Group %1",
   "args0": [
     {
       "type": "input_value",
-      "name": "rule_expression_group_output"
+      "name": "rule_expression_group_output",
+      "check": [
+        "Boolean",
+        "rfl",
+        "rfl_issuer",
+        "rfl_business_date",
+        "rfl_portfolio",
+        "rfl_instrument",
+        "rfl_position_definition"
+      ]
     }
   ],
   "colour": 0,
@@ -37,7 +33,7 @@
       "check": "rule_sequence_item"
     }
   ],
-  "colour": 120,
+  "colour": 345,
   "tooltip": "",
   "helpUrl": ""
 },
@@ -53,18 +49,136 @@
   ],
   "previousStatement": null,
   "nextStatement": null,
-  "colour": 230,
+  "colour": 345,
   "tooltip": "",
   "helpUrl": ""
 },
 {
   "type": "rfl",
-  "message0": "Get value from  %1",
+  "message0": "Get %1 From %2",
   "args0": [
     {
       "type": "field_input",
-      "name": "field_name",
-      "text": "field name"
+      "name": "property_name",
+      "text": "Property"
+    },
+    {
+      "type": "field_input",
+      "name": "entity_name",
+      "text": "Entity"
+    }
+  ],
+  "output": null,
+  "colour": 120,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "rfl_instrument",
+  "message0": "Get %1 From Instrument",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "property_name",
+      "text": "Property"
+    }
+  ],
+  "output": null,
+  "colour": 120,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "rfl_business_date",
+  "message0": "Get business date",
+  "output": null,
+  "colour": 120,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "rfl_issuer",
+  "message0": "Get %1 from issuer",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "property_name",
+      "text": "Property"
+    }
+  ],
+  "output": null,
+  "colour": 120,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "rfl_portfolio",
+  "message0": "Get %1 from portfolio",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "property_name",
+      "text": "Property"
+    }
+  ],
+  "output": null,
+  "colour": 120,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "rfl_position_definition",
+  "message0": "Get %1 from position definition",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "property_name",
+      "text": "Property"
+    }
+  ],
+  "output": null,
+  "colour": 120,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "rule_expression",
+  "message0": "Expression %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "rule_expression_output",
+      "check": [
+        "Boolean",
+        "rfl",
+        "rfl_issuer",
+        "rfl_business_date",
+        "rfl_portfolio",
+        "rfl_instrument",
+        "rfl_position_definition"
+      ]
+    }
+  ],
+  "inputsInline": false,
+  "colour": 345,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "with_safe_check",
+  "message0": "With safe check %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "get_value_input",
+      "check": [
+        "rfl",
+        "rfl_issuer",
+        "rfl_business_date",
+        "rfl_portfolio",
+        "rfl_instrument",
+        "rfl_position_definition"
+      ]
     }
   ],
   "output": null,

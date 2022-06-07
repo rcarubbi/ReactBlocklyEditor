@@ -77,13 +77,14 @@ function BlocklyEditor({ blockSet, ...rest }) {
     }, []);
 
     const onBlockChange = useCallback(async (e) => {
+       
         const { current: ws } = workspaceRef;
         if (e.type === Blockly.Events.BLOCK_CREATE) {
             const block = ws.getBlockById(e.blockId || e.newValue);
             setBlockId(block);
         }
 
-        if (e.newParentId !== e.oldParentId || e.newValue !== e.oldValue) {
+        if (e.newParentId !== e.oldParentId || e.newValue !== e.oldValue || e.type === Blockly.Events.BLOCK_DELETE) {
             await udpateOutputs();
         }
 

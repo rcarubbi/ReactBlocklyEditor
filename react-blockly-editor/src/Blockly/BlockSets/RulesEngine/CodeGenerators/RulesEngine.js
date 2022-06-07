@@ -5,7 +5,7 @@ const RulesEngine = new Blockly.Generator('RulesEngine');
 RulesEngine.ORDER_NONE = 99;
 RulesEngine.ORDER_ATOMIC = 0;
 RulesEngine.ORDER_STRING = 1;
-RulesEngine.ORDER_CONDITIONAL = 15; 
+RulesEngine.ORDER_CONDITIONAL = 15;
 RulesEngine.ORDER_EQUALITY = 9;
 RulesEngine.ORDER_RELATIONAL = 8;
 RulesEngine.ORDER_LOGICAL_NOT = 4.4;
@@ -38,19 +38,90 @@ RulesEngine['rule_sequence_item'] = function (block) {
 };
 
 RulesEngine['rfl'] = function (block) {
-  const text_field_name = block.getFieldValue('field_name');
+  const property_name = block.getFieldValue('property_name');
+  const entity_name = block.getFieldValue('entity_name');
   // TODO: Assemble JavaScript into code variable.
-  const code = `RFL('${text_field_name}')`
+  const code = `RFL('${entity_name}.${property_name}')`
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, RulesEngine.ORDER_NONE];
 };
 
+RulesEngine['rfl_instrument'] = function (block) {
+  const property_name = block.getFieldValue('property_name');
+
+  // TODO: Assemble JavaScript into code variable.
+  const code = `RFL('Instrument.${property_name}')`
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, RulesEngine.ORDER_NONE];
+};
+
+RulesEngine['rfl_business_date'] = function (block) {
+  // TODO: Assemble JavaScript into code variable.
+  const code = `RFL('BusinessDate')`
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, RulesEngine.ORDER_NONE];
+};
+
+RulesEngine['rfl_issuer'] = function (block) {
+  const property_name = block.getFieldValue('property_name');
+
+  // TODO: Assemble JavaScript into code variable.
+  const code = `RFL('Issuer.${property_name}')`
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, RulesEngine.ORDER_NONE];
+};
+
+RulesEngine['rfl_portfolio'] = function (block) {
+  const property_name = block.getFieldValue('property_name');
+
+  // TODO: Assemble JavaScript into code variable.
+  const code = `RFL('Portfolio.${property_name}')`
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, RulesEngine.ORDER_NONE];
+};
+
+RulesEngine['rfl_position_definition'] = function (block) {
+  const property_name = block.getFieldValue('property_name');
+
+  // TODO: Assemble JavaScript into code variable.
+  const code = `FL('PositionDefinition.${property_name}')`
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, RulesEngine.ORDER_NONE];
+};
+
+RulesEngine['with_safe_check'] = function (block) {
+  var children = block.getChildren();
+  const getValueInput = RulesEngine.valueToCode(block, "get_value_input", RulesEngine.ORDER_NONE);
+  if (children && children.length > 0) {
+    const nextBlock = children[0];
+    switch (nextBlock.type) {
+      case "rfl":
+        const entity_name = nextBlock.getFieldValue("entity_name");
+        return [`(RFL('${entity_name}') != NULL && ${getValueInput})`, RulesEngine.ORDER_NONE];
+      case "rfl_instrument":
+        return [`(RFL('Instrument') != NULL && ${getValueInput})`, RulesEngine.ORDER_NONE];
+      case "rfl_portfolio":
+        return [`(RFL('Portfolio') != NULL && ${getValueInput})`, RulesEngine.ORDER_NONE];
+      case "rfl_position_definition":
+        return [`(RFL('PositionDefinition') != NULL && ${getValueInput})`, RulesEngine.ORDER_NONE];
+      case "rfl_issuer":
+        return [`(RFL('Issuer') != NULL && ${getValueInput})`, RulesEngine.ORDER_NONE];
+      default:
+        return [getValueInput, RulesEngine.ORDER_NONE];
+    }
+    
+  }
+  else {
+    return ["", RulesEngine.ORDER_NONE]
+  }
+
+};
 
 
-RulesEngine["logic_ternary"] = function(block) {
+RulesEngine["logic_ternary"] = function (block) {
   const ifExpression = RulesEngine.valueToCode(block, "IF", RulesEngine.ORDER_CONDITIONAL) || "false",
-        thenExpression = RulesEngine.valueToCode(block, "THEN", RulesEngine.ORDER_CONDITIONAL) || "null",
-        elseExpression = RulesEngine.valueToCode(block, "ELSE", RulesEngine.ORDER_CONDITIONAL) || "null";
+    thenExpression = RulesEngine.valueToCode(block, "THEN", RulesEngine.ORDER_CONDITIONAL) || "null",
+    elseExpression = RulesEngine.valueToCode(block, "ELSE", RulesEngine.ORDER_CONDITIONAL) || "null";
   return [`if(${ifExpression},${thenExpression},${elseExpression})`, RulesEngine.ORDER_CONDITIONAL];
 }
 
@@ -136,17 +207,17 @@ RulesEngine["logic_compare"] = function (a) {
     GT: ">",
     GTE: ">="
   }[a.getFieldValue("OP")],
-      c = "==" === b || "!=" === b ? RulesEngine.ORDER_EQUALITY : RulesEngine.ORDER_RELATIONAL,
-      d = RulesEngine.valueToCode(a, "A", c) || "0";
+    c = "==" === b || "!=" === b ? RulesEngine.ORDER_EQUALITY : RulesEngine.ORDER_RELATIONAL,
+    d = RulesEngine.valueToCode(a, "A", c) || "0";
   a = RulesEngine.valueToCode(a, "B", c) || "0";
   return [d + " " + b + " " + a, c];
 };
 
 RulesEngine["logic_operation"] = function (a) {
-   
+
   var b = "AND" === a.getFieldValue("OP") ? "&&" : "||",
-      c = "&&" === b ? RulesEngine.ORDER_LOGICAL_AND : RulesEngine.ORDER_LOGICAL_OR,
-      d =  RulesEngine.valueToCode(a, "A", c);
+    c = "&&" === b ? RulesEngine.ORDER_LOGICAL_AND : RulesEngine.ORDER_LOGICAL_OR,
+    d = RulesEngine.valueToCode(a, "A", c);
   a = RulesEngine.valueToCode(a, "B", c);
 
   if (d || a) {
@@ -160,32 +231,32 @@ RulesEngine["logic_operation"] = function (a) {
 
 const originalValueToCode = RulesEngine.valueToCode;
 
- RulesEngine.valueToCode = function(a,b,c) {
-  return parseValue(originalValueToCode.call(RulesEngine, a,b,c));
- }
+RulesEngine.valueToCode = function (a, b, c) {
+  return parseValue(originalValueToCode.call(RulesEngine, a, b, c));
+}
 
 RulesEngine["logic_negate"] = function (a) {
   var b = RulesEngine.ORDER_LOGICAL_NOT;
   return ["!" + (RulesEngine.valueToCode(a, "BOOL", b) || "true"), b];
 };
 
- 
+
 
 RulesEngine["logic_null"] = function (a) {
-   
-  return ["\"null\"", RulesEngine.ORDER_ATOMIC];
+
+  return ["\"NULL\"", RulesEngine.ORDER_ATOMIC];
 };
 
 function parseValue(value) {
   if (!value) {
-      return value;
+    return value;
   } else {
-      const noParenthesesValue = (value[0] === '(') ? value.substring(1, value.length - 1) : value;
-      try {
-          return JSON.parse(noParenthesesValue);
-      } catch {
-          return noParenthesesValue;
-      }
+    const noParenthesesValue = (value[0] === '(') ? value.substring(1, value.length - 1) : value;
+    try {
+      return JSON.parse(noParenthesesValue);
+    } catch {
+      return noParenthesesValue;
+    }
   }
 }
 
