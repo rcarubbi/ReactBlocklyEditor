@@ -80,9 +80,10 @@
   "message0": "Get %1 From Instrument",
   "args0": [
     {
-      "type": "field_input",
+      "type": "field_autocomplete",
       "name": "property_name",
-      "text": "Property"
+      "text": "Property",
+      "serviceUrl": "https://628821ed7af826e39e5d15d2.mockapi.io/suggestions?filter="
     }
   ],
   "output": null,

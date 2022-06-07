@@ -4,10 +4,9 @@ import Blockly from 'blockly/core';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import axios from 'axios';
 import 'blockly/blocks';
-
-
 import locale from 'blockly/msg/en';
- 
+import './Fields/FieldAutoComplete'
+
 
 
 Blockly.setLocale(locale);
@@ -21,13 +20,15 @@ function BlocklyEditor({ blockSet, ...rest }) {
     const OutputComponents = useRef();
     const [output, setOutput] = useState(<></>);
 
-     const importBlockSetModules = useCallback(async () => {
+    const importBlockSetModules = useCallback(async () => {
         setBlocksArray(await import(`./BlockSets/${blockSet}/blocks.json`));
         setToolboxXml(await import(`./BlockSets/${blockSet}/toolbox.xml`));
         setWorkspaceXml(await import(`./BlockSets/${blockSet}/workspace.xml`));
         codeGenerators.current = await import(`./BlockSets/${blockSet}/CodeGenerators`);
         OutputComponents.current = await import(`./BlockSets/${blockSet}/OutputComponents`);
     }, [blockSet, setBlocksArray, setToolboxXml, setWorkspaceXml, codeGenerators, OutputComponents]);
+
+     
 
     const setBlockId = useCallback((block) => {
         const max = items => {
@@ -66,7 +67,7 @@ function BlocklyEditor({ blockSet, ...rest }) {
     }, []);
 
     const udpateOutputs = useCallback(async () => {
-
+        
         if (codeGenerators.current && OutputComponents.current) {
             const OutputComponent = OutputComponents.current.default;
             const outputs = codeGenerators.current.default.map((codeGenerator, index) =>
@@ -75,9 +76,9 @@ function BlocklyEditor({ blockSet, ...rest }) {
             setOutput(outputs);
         }
     }, []);
-
+ 
     const onBlockChange = useCallback(async (e) => {
-       
+ 
         const { current: ws } = workspaceRef;
         if (e.type === Blockly.Events.BLOCK_CREATE) {
             const block = ws.getBlockById(e.blockId || e.newValue);
@@ -140,7 +141,7 @@ function BlocklyEditor({ blockSet, ...rest }) {
                 initWorkspace();
             }
 
-          
+
         }
 
 
