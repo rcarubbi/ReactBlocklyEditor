@@ -1,25 +1,17 @@
 import Blockly from "blockly/core";
-import 'blockly/javascript';
+import Javascript from 'blockly/javascript';
 
 const RulesEngine = new Blockly.Generator('RulesEngine');
-RulesEngine.ORDER_NONE = 99;
-RulesEngine.ORDER_ATOMIC = 0;
-RulesEngine.ORDER_STRING = 1;
-RulesEngine.ORDER_CONDITIONAL = 15;
-RulesEngine.ORDER_EQUALITY = 9;
-RulesEngine.ORDER_RELATIONAL = 8;
-RulesEngine.ORDER_LOGICAL_NOT = 4.4;
-RulesEngine.ORDER_LOGICAL_AND = 13;
-RulesEngine.ORDER_LOGICAL_OR = 14;
+ 
 
 RulesEngine['rule_expression'] = function (block) {
-  var value_rule_expression_output = RulesEngine.valueToCode(block, 'rule_expression_output', RulesEngine.ORDER_ATOMIC);
+  var value_rule_expression_output = RulesEngine.valueToCode(block, 'rule_expression_output', Javascript.ORDER_ATOMIC);
   return value_rule_expression_output;
 };
 
 RulesEngine['rule_expression_group'] = function (block) {
 
-  var value_rule_expression_group_output = RulesEngine.valueToCode(block, 'rule_expression_group_output', RulesEngine.ORDER_ATOMIC);
+  var value_rule_expression_group_output = RulesEngine.valueToCode(block, 'rule_expression_group_output', Javascript.ORDER_ATOMIC);
   return value_rule_expression_group_output;
 };
 
@@ -43,7 +35,7 @@ RulesEngine['rfl'] = function (block) {
   // TODO: Assemble JavaScript into code variable.
   const code = `RFL('${entity_name}.${property_name}')`
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, RulesEngine.ORDER_NONE];
+  return [code, Javascript.ORDER_NONE];
 };
 
 RulesEngine['rfl_instrument'] = function (block) {
@@ -52,14 +44,14 @@ RulesEngine['rfl_instrument'] = function (block) {
   // TODO: Assemble JavaScript into code variable.
   const code = `RFL('Instrument.${property_name}')`
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, RulesEngine.ORDER_NONE];
+  return [code, Javascript.ORDER_NONE];
 };
 
 RulesEngine['rfl_business_date'] = function (block) {
   // TODO: Assemble JavaScript into code variable.
   const code = `RFL('BusinessDate')`
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, RulesEngine.ORDER_NONE];
+  return [code, Javascript.ORDER_NONE];
 };
 
 RulesEngine['rfl_issuer'] = function (block) {
@@ -68,7 +60,7 @@ RulesEngine['rfl_issuer'] = function (block) {
   // TODO: Assemble JavaScript into code variable.
   const code = `RFL('Issuer.${property_name}')`
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, RulesEngine.ORDER_NONE];
+  return [code, Javascript.ORDER_NONE];
 };
 
 RulesEngine['rfl_portfolio'] = function (block) {
@@ -77,7 +69,7 @@ RulesEngine['rfl_portfolio'] = function (block) {
   // TODO: Assemble JavaScript into code variable.
   const code = `RFL('Portfolio.${property_name}')`
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, RulesEngine.ORDER_NONE];
+  return [code, Javascript.ORDER_NONE];
 };
 
 RulesEngine['rfl_position_definition'] = function (block) {
@@ -86,49 +78,97 @@ RulesEngine['rfl_position_definition'] = function (block) {
   // TODO: Assemble JavaScript into code variable.
   const code = `FL('PositionDefinition.${property_name}')`
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, RulesEngine.ORDER_NONE];
+  return [code, Javascript.ORDER_NONE];
 };
 
 RulesEngine['with_safe_check'] = function (block) {
   var children = block.getChildren();
-  const getValueInput = RulesEngine.valueToCode(block, "get_value_input", RulesEngine.ORDER_NONE);
+  const getValueInput = RulesEngine.valueToCode(block, "get_value_input", Javascript.ORDER_NONE);
   if (children && children.length > 0) {
     const nextBlock = children[0];
     switch (nextBlock.type) {
       case "rfl":
         const entity_name = nextBlock.getFieldValue("entity_name");
-        return [`(RFL('${entity_name}') != NULL && ${getValueInput})`, RulesEngine.ORDER_NONE];
+        return [`(RFL('${entity_name}') != null && ${getValueInput})`, Javascript.ORDER_NONE];
       case "rfl_instrument":
-        return [`(RFL('Instrument') != NULL && ${getValueInput})`, RulesEngine.ORDER_NONE];
+        return [`(RFL('Instrument') != null && ${getValueInput})`, Javascript.ORDER_NONE];
       case "rfl_portfolio":
-        return [`(RFL('Portfolio') != NULL && ${getValueInput})`, RulesEngine.ORDER_NONE];
+        return [`(RFL('Portfolio') != null && ${getValueInput})`, Javascript.ORDER_NONE];
       case "rfl_position_definition":
-        return [`(RFL('PositionDefinition') != NULL && ${getValueInput})`, RulesEngine.ORDER_NONE];
+        return [`(RFL('PositionDefinition') != null && ${getValueInput})`, Javascript.ORDER_NONE];
       case "rfl_issuer":
-        return [`(RFL('Issuer') != NULL && ${getValueInput})`, RulesEngine.ORDER_NONE];
+        return [`(RFL('Issuer') != null && ${getValueInput})`, Javascript.ORDER_NONE];
       default:
-        return [getValueInput, RulesEngine.ORDER_NONE];
+        return [getValueInput, Javascript.ORDER_NONE];
     }
     
   }
   else {
-    return ["", RulesEngine.ORDER_NONE]
+    return ["", Javascript.ORDER_NONE]
   }
 
 };
 
 
+RulesEngine["text"] = function (block) {
+  return Javascript.text.call(RulesEngine, block);  
+};
+ 
 RulesEngine["logic_ternary"] = function (block) {
-  const ifExpression = RulesEngine.valueToCode(block, "IF", RulesEngine.ORDER_CONDITIONAL) || "false",
-    thenExpression = RulesEngine.valueToCode(block, "THEN", RulesEngine.ORDER_CONDITIONAL) || "null",
-    elseExpression = RulesEngine.valueToCode(block, "ELSE", RulesEngine.ORDER_CONDITIONAL) || "null";
-  return [`if(${ifExpression},${thenExpression},${elseExpression})`, RulesEngine.ORDER_CONDITIONAL];
+  const ifExpression = RulesEngine.valueToCode(block, "IF", Javascript.ORDER_CONDITIONAL) || "false",
+    thenExpression = RulesEngine.valueToCode(block, "THEN", Javascript.ORDER_CONDITIONAL) || "null",
+    elseExpression = RulesEngine.valueToCode(block, "ELSE", Javascript.ORDER_CONDITIONAL) || "null";
+  return [`if(${ifExpression},${thenExpression},${elseExpression})`, Javascript.ORDER_CONDITIONAL];
 }
 
-RulesEngine["logic_boolean"] = function (a) {
-  return ["TRUE" === a.getFieldValue("BOOL") ? "true" : "false", RulesEngine.ORDER_ATOMIC];
+RulesEngine["logic_boolean"] = function (block) {
+  return Javascript.logic_boolean.call(RulesEngine, block);  
 };
 
+ 
+RulesEngine["logic_compare"] = function (block) {
+  return Javascript.logic_compare.call(RulesEngine, block);  
+};
+
+RulesEngine["logic_operation"] = function (block) {
+  return Javascript.logic_operation.call(RulesEngine, block);  
+};
+
+const originalValueToCode = RulesEngine.valueToCode;
+ 
+
+RulesEngine["logic_negate"] = function (block) {
+  return Javascript.logic_negate.call(RulesEngine, block);  
+};
+
+RulesEngine["logic_null"] = function (a) {
+  return ["\"null\"", Javascript.ORDER_ATOMIC];
+};
+
+RulesEngine["math_number"] = function (block) {
+  return Javascript.math_number.call(RulesEngine, block);  
+};
+
+RulesEngine["math_arithmetic"] = function (block) {
+  return Javascript.math_arithmetic.call(RulesEngine, block);  
+};
+
+RulesEngine.valueToCode = function (a, b, c) {
+  return parseValue(originalValueToCode.call(RulesEngine, a, b, c));
+}
+
+function parseValue(value) {
+  if (!value) {
+    return value;
+  } else {
+    const noParenthesesValue = (value[0] === '(') ? value.substring(1, value.length - 1) : value;
+    try {
+      return JSON.parse(noParenthesesValue);
+    } catch {
+      return noParenthesesValue;
+    }
+  }
+}
 
 RulesEngine.fromWorkspace = (workspace) => {
   const top_blocks = workspace.getTopBlocks(false);
@@ -197,67 +237,4 @@ function statementToArray(stringArray) {
     }
   }
 }
-
-RulesEngine["logic_compare"] = function (a) {
-  var b = {
-    EQ: "==",
-    NEQ: "!=",
-    LT: "<",
-    LTE: "<=",
-    GT: ">",
-    GTE: ">="
-  }[a.getFieldValue("OP")],
-    c = "==" === b || "!=" === b ? RulesEngine.ORDER_EQUALITY : RulesEngine.ORDER_RELATIONAL,
-    d = RulesEngine.valueToCode(a, "A", c) || "0";
-  a = RulesEngine.valueToCode(a, "B", c) || "0";
-  return [d + " " + b + " " + a, c];
-};
-
-RulesEngine["logic_operation"] = function (a) {
-
-  var b = "AND" === a.getFieldValue("OP") ? "&&" : "||",
-    c = "&&" === b ? RulesEngine.ORDER_LOGICAL_AND : RulesEngine.ORDER_LOGICAL_OR,
-    d = RulesEngine.valueToCode(a, "A", c);
-  a = RulesEngine.valueToCode(a, "B", c);
-
-  if (d || a) {
-    var e = "&&" === b ? "true" : "false";
-    d || (d = e);
-    a || (a = e);
-  } else a = d = "false";
-
-  return [d + " " + b + " " + a, c];
-};
-
-const originalValueToCode = RulesEngine.valueToCode;
-
-RulesEngine.valueToCode = function (a, b, c) {
-  return parseValue(originalValueToCode.call(RulesEngine, a, b, c));
-}
-
-RulesEngine["logic_negate"] = function (a) {
-  var b = RulesEngine.ORDER_LOGICAL_NOT;
-  return ["!" + (RulesEngine.valueToCode(a, "BOOL", b) || "true"), b];
-};
-
-
-
-RulesEngine["logic_null"] = function (a) {
-
-  return ["\"NULL\"", RulesEngine.ORDER_ATOMIC];
-};
-
-function parseValue(value) {
-  if (!value) {
-    return value;
-  } else {
-    const noParenthesesValue = (value[0] === '(') ? value.substring(1, value.length - 1) : value;
-    try {
-      return JSON.parse(noParenthesesValue);
-    } catch {
-      return noParenthesesValue;
-    }
-  }
-}
-
 export default RulesEngine;

@@ -12,7 +12,9 @@
         "rfl_business_date",
         "rfl_portfolio",
         "rfl_instrument",
-        "rfl_position_definition"
+        "rfl_position_definition",
+        "String",
+        "Number"
       ]
     }
   ],
@@ -155,7 +157,9 @@
         "rfl_business_date",
         "rfl_portfolio",
         "rfl_instrument",
-        "rfl_position_definition"
+        "rfl_position_definition",
+        "String",
+        "Number"
       ]
     }
   ],
