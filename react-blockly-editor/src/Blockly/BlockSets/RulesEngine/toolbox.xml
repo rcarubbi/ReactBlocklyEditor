@@ -2,20 +2,35 @@
   <category name="Rules" colour="#a55b80">
     <block type="rule_expression"></block>
     <block type="rule_expression_group"></block>
-  </category>
-  <category name="Sequence" colour="#5ba55b">
-    <block type="rule_sequence_item">
-      <field name="rule_name">Name</field>
+    <block type="rule_expression_sequence">
+      <statement name="expression_statements">
+        <block type="rule_sequence_item">
+          <field name="rule_name">Name</field>
+        </block>
+      </statement>
     </block>
-    <block type="rule_expression_sequence"></block>
+  </category>
+  <category name="Entities" colour="#5ba55b">
+    <block type="rfl">
+      <field name="property_name">Property</field>
+      <field name="entity_name">Entity</field>
+    </block>
+    <block type="rfl_instrument">
+      <field name="property_name">Property</field>
+    </block>
+    <block type="rfl_business_date"></block>
+    <block type="rfl_issuer">
+      <field name="property_name">Property</field>
+    </block>
+    <block type="rfl_portfolio">
+      <field name="property_name">Property</field>
+    </block>
+    <block type="rfl_position_definition">
+      <field name="property_name">Property</field>
+    </block>
+    <block type="with_safe_check"></block>
   </category>
   <sep></sep>
-  <category name="Risk Functions" colour="#9fa55b">
-    <block type="rfl">
-      <field name="field_name">field name</field>
-    </block>
-  </category>
-  <category name="Flow Control" colour="#745ba5"></category>
   <category name="Logic" colour="#5b80a5">
     <block type="logic_compare">
       <field name="OP">EQ</field>
@@ -30,8 +45,9 @@
     <block type="logic_null"></block>
     <block type="logic_ternary"></block>
   </category>
-  <category name="Error Handling" colour="#a55b80"></category>
-  <sep></sep>
-  <category name="Text" colour="#a5745b"></category>
-  <category name="Date" colour="#5ba58c"></category>
+  <category name="Text" colour="#5ba58c">
+    <block type="text">
+      <field name="TEXT"></field>
+    </block>
+  </category>
 </xml>
