@@ -1,9 +1,11 @@
 import ReactJson from 'react-json-view'
-
+import "../../OutputComponents.css"
 function JsonBotDefinition({output}) {
     
     return (
-        <ReactJson src={JSON.parse(output)}></ReactJson>
+        <div className='outputContainer'>
+        <ReactJson src={JSON.parse(output)} theme={'monokai'}></ReactJson>
+        </div>
     )
 } 
 

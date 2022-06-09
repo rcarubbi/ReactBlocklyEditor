@@ -1,3 +1,4 @@
+import "../../OutputComponents.css";
 import FlowchartComponent from "react-simple-flowchart";
 
 function Flowchart({ output }) {
@@ -167,10 +168,12 @@ function Flowchart({ output }) {
         }
       };
     return (
+      <div class="outputContainer">
         <FlowchartComponent
             chartCode={output}
             options={opt}
         />
+        </div>
     )
 }
 

@@ -6,7 +6,6 @@ export class FieldAutoComplete extends Blockly.FieldTextInput {
     super(value, validator);
     this.timer = null;
     this.boundEvents_ = [];
-    console.log(config);
     this.serviceUrl = config.serviceUrl;
   }
 
@@ -111,11 +110,16 @@ Blockly.Css.register(
         background: transparent; /* override white in chrome */
         margin: 4px;
         padding: 0;
-        width: 100%;
+        width: auto;
         cursor:pointer;
+        padding: 5px;
+        border: solid transparent 1px;
       }
       .fieldAutoComplete:focus {
         outline: none;
+      }
+      .fieldAutoComplete:hover {
+        border: solid white 1px;
       }
      `
   /* eslint-enable indent */

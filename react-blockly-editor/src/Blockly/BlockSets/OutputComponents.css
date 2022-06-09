@@ -1,0 +1,11 @@
+.outputContainer {
+    color: white;
+    margin-top: 0px;
+    margin-left: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    border: solid white 1px;
+    background-color: rgb(39, 40, 34);
+    margin-bottom: 20px;
+    margin-right: 15px;
+}

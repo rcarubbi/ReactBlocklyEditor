@@ -1,8 +1,10 @@
+import "../../OutputComponents.css"
+
 function RulesEngine({output}) {
     
     return (
         (output && 
-        <pre>{output}</pre>)
+        <pre className="outputContainer">{output}</pre>)
     )
 } 
 

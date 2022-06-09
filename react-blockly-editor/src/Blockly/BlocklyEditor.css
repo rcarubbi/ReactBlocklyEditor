@@ -1,5 +1,5 @@
 #blocklyDiv {
-    flex: 0 0 50%;
+    flex: 0 0 75%;
    
 }
 
@@ -10,7 +10,6 @@
 }
 
 #blocklyContainer {
-    max-width: 95vw;
-    height: 95vh;
+    height: 94vh;
     display:flex;
 }

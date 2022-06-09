@@ -60,9 +60,10 @@
   "message0": "Get %1 From %2",
   "args0": [
     {
-      "type": "field_input",
+      "type": "field_autocomplete",
       "name": "property_name",
-      "text": "Property"
+      "text": "Property",
+      "serviceUrl": "https://628821ed7af826e39e5d15d2.mockapi.io/suggestions?entity={entity_name}&filter="
     },
     {
       "type": "field_input",

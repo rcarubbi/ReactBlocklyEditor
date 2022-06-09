@@ -1,5 +1,6 @@
 import Blockly from 'blockly/core';
 
+
 const JsonBotDefinition = new Blockly.Generator('JsonBotDefinition');
 JsonBotDefinition.ORDER_NONE = 99;
 JsonBotDefinition.ORDER_ATOMIC = 0;

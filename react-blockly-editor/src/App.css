@@ -1,5 +1,19 @@
-#app {
-   
  
+
+#filter {
+    padding: 10px;
 }
 
+.label {
+    color: white;
+    background-color: #333;
+    margin-right: 10px;
+}
+
+.dropdown {
+    
+    color: white;
+    background-color: rgb(39, 40, 34);
+    border-radius: 5px;
+    padding: 5px;
+}
