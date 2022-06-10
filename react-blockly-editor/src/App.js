@@ -7,7 +7,7 @@ function App() {
   return (
     <div id="app" onChange={e => setBlockSet(e.target.value)}>
       <div id="filter">
-        <label className="label" for="blockSetDropdown">Block Set:</label>
+        <label className="label" htmlFor="blockSetDropdown">Block Set:</label>
         <select className="dropdown" id="blockSetDropdown">
           <option value="RulesEngine">Rules Engine</option>
           <option value="JsonBotDefinition">Json bot definition</option>

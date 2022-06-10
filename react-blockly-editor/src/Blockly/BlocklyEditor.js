@@ -75,8 +75,7 @@ function BlocklyEditor({ blockSet, ...rest }) {
             const outputs = codeGenerators.current.default.map((codeGenerator, index) =>
                 <OutputComponent key={index} componentName={codeGenerator.name_} output={codeGenerator.fromWorkspace(workspaceRef.current)} />
             );
-            console.log(OutputComponents.current.default);
-            console.log(outputs);
+             
             setOutput(outputs);
         }
     }, []);
