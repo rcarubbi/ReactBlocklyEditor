@@ -63,7 +63,7 @@
       "type": "field_autocomplete",
       "name": "property_name",
       "text": "Property",
-      "serviceUrl": "https://628821ed7af826e39e5d15d2.mockapi.io/suggestions?entity={entity_name}&filter="
+      "serviceUrl": "https://628821ed7af826e39e5d15d2.mockapi.io/{entity_name}?filter="
     },
     {
       "type": "field_input",
@@ -84,7 +84,7 @@
       "type": "field_autocomplete",
       "name": "property_name",
       "text": "Property",
-      "serviceUrl": "https://628821ed7af826e39e5d15d2.mockapi.io/suggestions?filter="
+      "serviceUrl": "https://628821ed7af826e39e5d15d2.mockapi.io/Instrument?filter="
     }
   ],
   "output": null,

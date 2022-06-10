@@ -43,11 +43,20 @@ export class FieldAutoComplete extends Blockly.FieldTextInput {
     const curlyBracesRegexExpression = /[^{\}]+(?=})/g;
     const curlyBranesRegexInclusiveExpression = /\{([^}]+)\}/g;
 
-    const params = Object.assign({}, ...this.serviceUrl.match(curlyBracesRegexExpression).map(fieldName => ({ [fieldName]: this.sourceBlock_.getFieldValue(fieldName)})))
-    const serviceUrl = this.serviceUrl.replace(curlyBranesRegexInclusiveExpression, fieldName => params[fieldName.substring(1, fieldName.length-1)]);
+    const fieldNames = this.serviceUrl.match(curlyBracesRegexExpression);
 
-    const response = await fetch(`${serviceUrl}${term}`, request)
-    return await response.json();
+    const params = Array.isArray(fieldNames)
+      ? Object.assign({}, ...this.serviceUrl.match(curlyBracesRegexExpression).map(fieldName => ({ [fieldName]: this.sourceBlock_.getFieldValue(fieldName) })))
+      : {};
+
+    const serviceUrl = this.serviceUrl.replace(curlyBranesRegexInclusiveExpression, fieldName => params[fieldName.substring(1, fieldName.length - 1)]);
+    try {
+      const response = await fetch(`${serviceUrl}${term}`, request)
+      
+      return response.status === 200? await response.json() : [];
+    } catch {
+      return [];
+    }
   }
 
   async showSuggestions(term) {
