@@ -1,10 +1,13 @@
 import './BlocklyEditor.css';
 import Blockly from 'blockly/core';
 import Theme  from '@blockly/theme-dark';
+
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import 'blockly/blocks';
 import locale from 'blockly/msg/en';
 import './Fields/FieldAutoComplete'
+
+ 
 
 Blockly.setLocale(locale);
 
@@ -67,7 +70,7 @@ function BlocklyEditor({ blockSet, ...rest }) {
         
         if (codeGenerators.current && OutputComponents.current) {
             const OutputComponent = OutputComponents.current.default;
-            
+             
             const outputs = codeGenerators.current.default.map((codeGenerator, index) =>
                 <OutputComponent key={index} componentName={codeGenerator.name_} output={codeGenerator.fromWorkspace(workspaceRef.current)} />
             );
@@ -102,7 +105,7 @@ function BlocklyEditor({ blockSet, ...rest }) {
         });
 
         const toolBoxContent = await toolBoxResponse.text();
-        const workspaceContent = await workspaceResponse.text();
+        const worskpaceContent = await workspaceResponse.text();
 
         blocklyDiv.current.innerHTML = null;
         workspaceRef.current = Blockly.inject(blocklyDiv.current,
@@ -114,10 +117,10 @@ function BlocklyEditor({ blockSet, ...rest }) {
         );
 
 
-        if (workspaceContent) {
+        if (worskpaceContent) {
             workspaceRef.current.addChangeListener(onBlockChange);
             workspaceRef.current.clear();
-            Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(workspaceContent), workspaceRef.current);
+            Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(worskpaceContent), workspaceRef.current);
             await udpateOutputs();
         }
     }, [onBlockChange, rest, toolboxXml, workspaceXml, udpateOutputs]);

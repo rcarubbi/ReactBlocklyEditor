@@ -1,0 +1,9 @@
+.expression {
+    color: white;
+    margin-top: 0px;
+    margin-left: 10px;
+    background-color: black;
+    padding: 10px;
+    border-radius: 5px;
+    border: solid white 1px;
+}
