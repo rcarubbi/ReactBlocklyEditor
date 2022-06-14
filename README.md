@@ -85,7 +85,7 @@ both folder CodeGenerators and OutputComponents must have a root file to expose 
   export default OutputComponents;
   ```
   
-  so finally, this is the file structure expected for a Block Set:
+  At this point you should have a file structure like this for your Block Set:
  
  ```
  📦blockSetName
@@ -100,5 +100,15 @@ both folder CodeGenerators and OutputComponents must have a root file to expose 
     ┣📜index.js
     ┣📜componentA.js
     ┗📜componentA.js
+```
+
+#### Add your block set to the dropdown list
+
+in the src folder, find the dropdown list and add your blockset as shown below:
+
+```html
+<select className="dropdown" id="blockSetDropdown">
+  <option value="yourBlockSetName">Your block set name</option>
+</select>
 ```
   
