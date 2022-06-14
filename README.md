@@ -104,7 +104,7 @@ both folder CodeGenerators and OutputComponents must have a root file to expose 
 
 #### Add your block set to the dropdown list
 
-in the src folder, find the dropdown list and add your blockset as shown below:
+in the src folder, find the app component and edit the dropdown list adding your blockset as shown below:
 
 ```html
 <select className="dropdown" id="blockSetDropdown">
