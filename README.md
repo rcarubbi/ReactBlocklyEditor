@@ -87,22 +87,19 @@ both folder CodeGenerators and OutputComponents must have a root file to expose 
   
   so finally, this is the file structure expected for a Block Set:
  
- ```folder
-  blockSetName
-  │   blocks.json
-  │   toolbox.xml
-  │   workspace.xml
-  │   
-  ┡───CodeGenerators
-  │   │   index.js
-  │   │   componentA.js
-  │   │   componentB.js
-  │   │
-  │   
-  └───OutputComponents
-      │   index.js
-      │   componentA.js
-      │   componentA.js
-      │
+ ```
+ 📦blockSetName
+  ┣📜blocks.json
+  ┣📜toolbox.xml
+  ┣📜workspace.xml   
+  ┣📂CodeGenerators
+  ┃ ┣📜index.js
+  ┃ ┣📜componentA.js
+  ┃ ┗📜componentB.js
+  ┗📂OutputComponents
+    ┣📜index.js
+    ┣📜componentA.js
+    ┗📜componentA.js
+    
 ```
   
