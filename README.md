@@ -100,6 +100,5 @@ both folder CodeGenerators and OutputComponents must have a root file to expose 
     ┣📜index.js
     ┣📜componentA.js
     ┗📜componentA.js
-    
 ```
   
